@@ -1,40 +1,751 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Menu for Content Repository</title>
-    <style>
-      :root { color-scheme: light dark; }
-      body {
-        font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
-        margin: 0;
-        min-height: 100vh;
-        display: grid;
-        place-items: center;
-        padding: 2rem;
-      }
-      main { max-width: 48rem; text-align: center; }
-      h1 { margin-bottom: 0.5rem; }
-      p { line-height: 1.6; }
-      code {
-        background: color-mix(in oklab, canvastext 12%, canvas 88%);
-        padding: 0.15rem 0.4rem;
-        border-radius: 0.35rem;
-      }
-    </style>
-  </head>
-  <body>
-    <main>
-      <h1>GitHub Pages is working ✅</h1>
-      <p>
-        This repository now includes an <code>index.html</code> file so GitHub Pages has a
-        default page to serve.
-      </p>
-      <p>
-        If your Pages URL was returning 404 before, wait 1–2 minutes after pushing this commit
-        and then refresh.
-      </p>
-    </main>
-  </body>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Oracle Fusion Learning Hub</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* Dark mode navy palette */
+    --bg:         #08152a;
+    --navy:       #0d1f3c;
+    --navy-mid:   #0f2244;
+    --navy-card:  #132848;
+    --navy-raise: #1a3158;
+    --navy-light: #1e3d6e;
+    --sky:        #4da6e8;
+    --sky-light:  #7dc2f4;
+    --sky-pale:   rgba(77,166,232,0.12);
+    --white:      #ffffff;
+    --text:       #cde3f8;
+    --text-muted: #6a90b8;
+    --border:     rgba(77,166,232,0.15);
+    --border-mid: rgba(77,166,232,0.25);
+    --shadow:     0 4px 32px rgba(4,10,22,0.55);
+    --radius:     12px;
+    --transition: 0.22s cubic-bezier(.4,0,.2,1);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  /* ── TOP NAV ── */
+  header {
+    background: var(--navy);
+    border-bottom: 1px solid var(--border-mid);
+    position: sticky; top: 0; z-index: 100;
+  }
+  .header-inner {
+    max-width: 1280px; margin: 0 auto;
+    padding: 0 32px;
+    height: 64px;
+    display: flex; align-items: center; gap: 16px;
+  }
+  .logo-mark {
+    width: 36px; height: 36px;
+    background: linear-gradient(135deg, var(--sky) 0%, var(--sky-light) 100%);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .logo-mark svg { width: 20px; height: 20px; fill: var(--white); }
+  .logo-text {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.15rem;
+    color: var(--white);
+    letter-spacing: 0.01em;
+  }
+  .logo-text span { color: var(--sky-light); }
+  .header-badge {
+    margin-left: auto;
+    background: rgba(77,166,232,0.15);
+    border: 1px solid rgba(77,166,232,0.3);
+    color: var(--sky-light);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 20px;
+  }
+
+  /* ── BREADCRUMB ── */
+  .breadcrumb-bar {
+    background: var(--navy-mid);
+    border-bottom: 1px solid var(--border);
+    padding: 0 32px;
+  }
+
+  .breadcrumb-inner {
+    max-width: 1280px; margin: 0 auto;
+    height: 44px; display: flex; align-items: center; gap: 6px;
+  }
+  .bc-item {
+    font-size: 0.8rem; color: var(--text-muted);
+    cursor: pointer; transition: color var(--transition);
+    white-space: nowrap;
+  }
+  .bc-item:hover { color: var(--sky-light); }
+  .bc-item.active { color: var(--sky-light); font-weight: 500; pointer-events: none; }
+  .bc-sep { color: rgba(138,172,204,0.4); font-size: 0.75rem; }
+
+  /* ── MAIN LAYOUT ── */
+  main {
+    max-width: 1280px; margin: 0 auto;
+    padding: 40px 32px 80px;
+  }
+
+  /* ── PAGE HEADER ── */
+  .page-header {
+    margin-bottom: 36px;
+  }
+  .page-header .eyebrow {
+    font-size: 0.72rem; font-weight: 600; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--sky);
+    margin-bottom: 8px;
+  }
+  .page-header h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 2.1rem; color: var(--white);
+    line-height: 1.2;
+  }
+  .page-header p {
+    margin-top: 10px; font-size: 0.95rem;
+    color: var(--text-muted); max-width: 540px; line-height: 1.6;
+  }
+
+  /* ── SECTION LABEL ── */
+  .section-label {
+    font-size: 0.72rem; font-weight: 600; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--text-muted);
+    margin-bottom: 16px;
+  }
+
+  /* ── MODULE GRID (Tier 1) ── */
+  .module-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+    gap: 16px;
+    margin-bottom: 48px;
+  }
+  .module-card {
+    background: var(--navy-card);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius);
+    padding: 22px 20px 20px;
+    cursor: pointer;
+    transition: all var(--transition);
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(4,10,22,0.3);
+  }
+  .module-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--sky), var(--sky-light));
+    opacity: 0; transition: opacity var(--transition);
+  }
+  .module-card:hover {
+    border-color: var(--sky);
+    background: var(--navy-raise);
+    box-shadow: 0 6px 28px rgba(77,166,232,0.15);
+    transform: translateY(-2px);
+  }
+  .module-card:hover::before { opacity: 1; }
+  .module-card.selected {
+    border-color: var(--sky);
+    background: var(--navy-raise);
+    box-shadow: 0 6px 28px rgba(77,166,232,0.18);
+  }
+  .module-card.selected::before { opacity: 1; }
+  .module-icon {
+    width: 42px; height: 42px;
+    background: var(--sky-pale);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 14px;
+  }
+  .module-icon svg { width: 22px; height: 22px; stroke: var(--sky); fill: none; stroke-width: 1.7; }
+  .module-card h3 {
+    font-size: 0.92rem; font-weight: 600; color: var(--white);
+    margin-bottom: 5px;
+  }
+  .module-card p {
+    font-size: 0.78rem; color: var(--text-muted); line-height: 1.5;
+  }
+  .module-count {
+    display: inline-flex; align-items: center; gap: 4px;
+    margin-top: 12px;
+    font-size: 0.72rem; font-weight: 600; color: var(--sky);
+    letter-spacing: 0.04em;
+  }
+
+  /* ── SUBPROCESS PANEL (Tier 2) ── */
+  .subprocess-panel {
+    background: var(--navy-card);
+    border: 1px solid var(--border-mid);
+    border-radius: 16px;
+    padding: 28px 28px 32px;
+    margin-bottom: 32px;
+    box-shadow: var(--shadow);
+    display: none;
+    animation: slideIn 0.28s cubic-bezier(.4,0,.2,1);
+  }
+  .subprocess-panel.visible { display: block; }
+
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .panel-header {
+    display: flex; align-items: center; gap: 14px;
+    margin-bottom: 24px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border);
+  }
+  .panel-icon {
+    width: 48px; height: 48px;
+    background: var(--navy-raise);
+    border: 1px solid var(--border-mid);
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .panel-icon svg { width: 24px; height: 24px; stroke: var(--sky-light); fill: none; stroke-width: 1.7; }
+  .panel-header-text h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.3rem; color: var(--white);
+  }
+  .panel-header-text p { font-size: 0.82rem; color: var(--text-muted); margin-top: 3px; }
+  .close-btn {
+    margin-left: auto;
+    width: 32px; height: 32px; border-radius: 8px;
+    border: 1px solid var(--border);
+    background: transparent;
+    cursor: pointer; display: flex; align-items: center; justify-content: center;
+    color: var(--text-muted); transition: all var(--transition);
+    flex-shrink: 0;
+  }
+  .close-btn:hover { background: var(--sky-pale); color: var(--sky-light); border-color: var(--sky); }
+
+  .subprocess-list {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 12px;
+  }
+  .subprocess-card {
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 18px;
+    cursor: pointer;
+    transition: all var(--transition);
+    background: var(--navy-raise);
+    display: flex; align-items: flex-start; gap: 12px;
+  }
+  .subprocess-card:hover {
+    border-color: var(--sky);
+    background: var(--navy-light);
+    box-shadow: 0 3px 16px rgba(77,166,232,0.12);
+  }
+  .subprocess-card.selected {
+    border-color: var(--sky);
+    background: var(--navy-light);
+    box-shadow: 0 3px 16px rgba(77,166,232,0.15);
+  }
+  .subprocess-bullet {
+    width: 28px; height: 28px; border-radius: 7px;
+    background: var(--sky-pale); flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    margin-top: 1px;
+  }
+  .subprocess-bullet svg { width: 14px; height: 14px; stroke: var(--sky); fill: none; stroke-width: 2; }
+  .subprocess-card h4 { font-size: 0.85rem; font-weight: 600; color: var(--white); margin-bottom: 3px; }
+  .subprocess-card span { font-size: 0.75rem; color: var(--text-muted); }
+
+  /* ── PROCESS DRAWER (Tier 3) ── */
+  .process-drawer {
+    background: var(--bg);
+    border: 1px solid var(--border-mid);
+    border-radius: 16px;
+    padding: 28px 28px 32px;
+    margin-top: -4px;
+    display: none;
+    animation: slideIn 0.25s cubic-bezier(.4,0,.2,1);
+  }
+  .process-drawer.visible { display: block; }
+
+  .drawer-header {
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 20px;
+  }
+  .drawer-header h3 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.1rem; color: var(--white);
+  }
+  .drawer-header .sub-label {
+    font-size: 0.75rem; color: var(--sky-light);
+    margin-left: auto;
+  }
+
+  .process-list { display: flex; flex-direction: column; gap: 8px; }
+  .process-item {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(77,166,232,0.2);
+    border-radius: 8px;
+    padding: 13px 16px;
+    display: flex; align-items: center; gap: 12px;
+    text-decoration: none;
+    transition: all var(--transition);
+    cursor: pointer;
+    position: relative;
+  }
+  .process-item:hover {
+    background: rgba(77,166,232,0.12);
+    border-color: var(--sky);
+    transform: translateX(4px);
+  }
+  .process-num {
+    width: 24px; height: 24px; border-radius: 50%;
+    background: rgba(77,166,232,0.2);
+    border: 1px solid rgba(77,166,232,0.35);
+    font-size: 0.7rem; font-weight: 700; color: var(--sky-light);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .process-text { flex: 1; }
+  .process-text strong {
+    display: block; font-size: 0.85rem; font-weight: 500; color: var(--white);
+    margin-bottom: 2px;
+  }
+  .process-text em { font-style: normal; font-size: 0.73rem; color: var(--sky-light); }
+  .process-link-icon {
+    width: 28px; height: 28px; border-radius: 6px;
+    background: rgba(77,166,232,0.15);
+    border: 1px solid rgba(77,166,232,0.25);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; transition: all var(--transition);
+  }
+  .process-item:hover .process-link-icon {
+    background: var(--sky); border-color: var(--sky);
+  }
+  .process-link-icon svg { width: 13px; height: 13px; stroke: var(--sky-light); fill: none; stroke-width: 2.2; }
+  .process-item:hover .process-link-icon svg { stroke: var(--white); }
+
+  /* ── EMPTY STATE ── */
+  .empty-state {
+    text-align: center; padding: 60px 20px;
+    color: var(--text-muted);
+  }
+  .empty-state svg { width: 48px; height: 48px; margin-bottom: 16px; opacity: 0.4; }
+  .empty-state p { font-size: 0.88rem; }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 20px 32px;
+    text-align: center;
+    font-size: 0.75rem; color: var(--text-muted);
+    background: var(--navy);
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="header-inner">
+    <div class="logo-mark">
+      <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+    </div>
+    <div class="logo-text">Oracle Fusion <span>Learning Hub</span></div>
+    <div class="header-badge">Guided Processes</div>
+  </div>
+</header>
+
+<!-- BREADCRUMB -->
+<div class="breadcrumb-bar">
+  <div class="breadcrumb-inner" id="breadcrumb">
+    <span class="bc-item active" onclick="goHome()">All Modules</span>
+  </div>
+</div>
+
+<!-- MAIN -->
+<main>
+  <div class="page-header" id="pageHeader">
+    <div class="eyebrow">Oracle Fusion Cloud</div>
+    <h1>Guided Learning Hub</h1>
+    <p>Select a module below to explore subprocess areas and step-by-step guided process links directly within Oracle Fusion.</p>
+  </div>
+
+  <div class="section-label" id="sectionLabel">MODULES</div>
+
+  <!-- TIER 1: MODULE GRID -->
+  <div class="module-grid" id="moduleGrid">
+    <!-- cards injected by JS -->
+  </div>
+
+  <!-- TIER 2: SUBPROCESS PANEL -->
+  <div class="subprocess-panel" id="subprocessPanel">
+    <div class="panel-header" id="panelHeader">
+      <!-- injected -->
+    </div>
+    <div class="subprocess-list" id="subprocessList">
+      <!-- injected -->
+    </div>
+  </div>
+
+  <!-- TIER 3: PROCESS DRAWER -->
+  <div class="process-drawer" id="processDrawer">
+    <div class="drawer-header" id="drawerHeader"></div>
+    <div class="process-list" id="processList"></div>
+  </div>
+</main>
+
+<footer>Oracle Fusion Learning Hub &nbsp;·&nbsp; Internal Use Only &nbsp;·&nbsp; Guided Process Links</footer>
+
+<script>
+// ── DATA MODEL ──────────────────────────────────────────────────────────────
+const modules = [
+  {
+    id: 'absences',
+    name: 'Absence Management',
+    desc: 'Leave, accruals, and absence configuration',
+    icon: `<svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>`,
+    subprocesses: [
+      {
+        id: 'emp-absence',
+        name: 'Employee — Enter Absence',
+        desc: '3 guided processes',
+        icon: `<svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>`,
+        processes: [
+          { name: 'Submit Absence Request',       hint: 'Self-service via Me > Time and Absences',  url: 'https://fa-eqne-dev19-saasfademo1.ds-fa.oraclepdemos.com/fscmUI/faces/FuseWelcome?stStart=qkfc9dgs' },
+          { name: 'View Absence Balances',         hint: 'Check accrued leave entitlements',          url: 'https://fa-eqne-dev19-saasfademo1.ds-fa.oraclepdemos.com/fscmUI/faces/FuseWelcome?stStart=tprxay7s' },
+          { name: 'Cancel or Edit Absence',        hint: 'Retract a submitted or approved request',   url: '#' },
+        ]
+      },
+      {
+        id: 'mgr-absence',
+        name: 'Manager — Manage Team Absences',
+        desc: '4 guided processes',
+        icon: `<svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>`,
+        processes: [
+          { name: 'Approve or Reject Absence Request', hint: 'My Team > Approvals',                  url: 'https://fa-eqne-dev19-saasfademo1.ds-fa.oraclepdemos.com/fscmUI/faces/FuseWelcome?stStart=eo45ihd9' },
+          { name: 'View Team Absence Calendar',        hint: 'Visibility across direct reports',      url: '#' },
+          { name: 'Enter Absence on Behalf of Employee', hint: 'Proxy entry for team members',        url: 'https://fa-eqne-dev19-saasfademo1.ds-fa.oraclepdemos.com/fscmUI/faces/FuseWelcome?stStart=mvt0gwft' },
+          { name: 'Review Employee Absence History',   hint: 'Audit trail and historical balances',   url: '#' },
+        ]
+      },
+      {
+        id: 'admin-absence',
+        name: 'Admin — Configure & Administer',
+        desc: '5 guided processes',
+        icon: `<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/></svg>`,
+        processes: [
+          { name: 'Create Absence Plan',               hint: 'Setup > Absence Plans',                 url: '#' },
+          { name: 'Configure Eligibility Profile',     hint: 'Define who qualifies for each plan',    url: '#' },
+          { name: 'Manage Accrual Bands',              hint: 'Set tenure-based accrual rates',        url: '#' },
+          { name: 'Run Accrual Process',               hint: 'Scheduled or manual accrual execution', url: '#' },
+          { name: 'Configure Carryover Rules',         hint: 'Year-end balance carry logic',          url: '#' },
+        ]
+      },
+    ]
+  },
+  {
+    id: 'time-labor',
+    name: 'Time & Labor',
+    desc: 'Time cards, scheduling, and WFM rules',
+    icon: `<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>`,
+    subprocesses: [
+      {
+        id: 'emp-time',
+        name: 'Employee — Enter Time',
+        desc: '3 guided processes',
+        icon: `<svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>`,
+        processes: [
+          { name: 'Submit Weekly Time Card',           hint: 'Me > Time > Enter Time',                url: '#' },
+          { name: 'Correct and Resubmit Time Card',    hint: 'Edit in-progress or returned cards',    url: '#' },
+          { name: 'View Time Card Status',             hint: 'Track approval stage',                  url: '#' },
+        ]
+      },
+      {
+        id: 'mgr-time',
+        name: 'Manager — Manage Time',
+        desc: '3 guided processes',
+        icon: `<svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>`,
+        processes: [
+          { name: 'Review and Approve Time Cards',     hint: 'My Team > Time Cards',                  url: '#' },
+          { name: 'Add Time on Behalf of Employee',    hint: 'Proxy time entry',                      url: '#' },
+          { name: 'Resolve Time Card Exceptions',      hint: 'Address flagged variances',             url: '#' },
+        ]
+      },
+      {
+        id: 'admin-time',
+        name: 'Admin — Configure Time',
+        desc: '4 guided processes',
+        icon: `<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/></svg>`,
+        processes: [
+          { name: 'Configure Time Entry Profiles',     hint: 'Define layout and rules per worker type', url: '#' },
+          { name: 'Set Up Repeating Time Periods',     hint: 'Weekly, bi-weekly, semi-monthly',         url: '#' },
+          { name: 'Define Time Calculation Rules',     hint: 'Overtime, shift premiums, rounding',      url: '#' },
+          { name: 'Run Load Time Card Batches',        hint: 'Transfer to payroll or project costing',  url: '#' },
+        ]
+      },
+    ]
+  },
+  {
+    id: 'payroll',
+    name: 'Payroll',
+    desc: 'Pay runs, elements, and compliance',
+    icon: `<svg viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>`,
+    subprocesses: [
+      {
+        id: 'emp-pay',
+        name: 'Employee — View Pay',
+        desc: '2 guided processes',
+        icon: `<svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>`,
+        processes: [
+          { name: 'View Pay Slip',                     hint: 'Me > Pay > Payslips',                   url: '#' },
+          { name: 'Update Direct Deposit Details',     hint: 'Banking and payment preferences',        url: '#' },
+        ]
+      },
+      {
+        id: 'admin-pay',
+        name: 'Admin — Run Payroll',
+        desc: '4 guided processes',
+        icon: `<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/></svg>`,
+        processes: [
+          { name: 'Submit Payroll Run',                hint: 'Payroll > Submit a Process',             url: '#' },
+          { name: 'Run Payroll Pre-check',             hint: 'Validate before live run',               url: '#' },
+          { name: 'Calculate Payroll',                 hint: 'Full cycle calculation run',             url: '#' },
+          { name: 'Archive and Publish Payslips',      hint: 'Distribute to employees',                url: '#' },
+        ]
+      },
+    ]
+  },
+  {
+    id: 'benefits',
+    name: 'Benefits',
+    desc: 'Enrollment, plans, and life events',
+    icon: `<svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>`,
+    subprocesses: [
+      {
+        id: 'emp-benefits',
+        name: 'Employee — Enroll',
+        desc: '3 guided processes',
+        icon: `<svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>`,
+        processes: [
+          { name: 'Open Enrollment — Select Plans',    hint: 'Me > Benefits > Open Enrollment',        url: '#' },
+          { name: 'Add or Change Beneficiaries',       hint: 'Designate coverage beneficiaries',       url: '#' },
+          { name: 'Report a Life Event',               hint: 'Marriage, birth, divorce, etc.',         url: '#' },
+        ]
+      },
+      {
+        id: 'admin-benefits',
+        name: 'Admin — Configure Benefits',
+        desc: '3 guided processes',
+        icon: `<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/></svg>`,
+        processes: [
+          { name: 'Create a Benefits Plan',            hint: 'Benefits > Plans > Create',              url: '#' },
+          { name: 'Configure Enrollment Windows',      hint: 'Open, life event, and new hire windows', url: '#' },
+          { name: 'Run Enrollment Audit Report',       hint: 'Validate elections and coverage',        url: '#' },
+        ]
+      },
+    ]
+  },
+  {
+    id: 'recruiting',
+    name: 'Recruiting',
+    desc: 'Requisitions, candidates, and offers',
+    icon: `<svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>`,
+    subprocesses: [
+      {
+        id: 'mgr-recruiting',
+        name: 'Hiring Manager — Manage Requisition',
+        desc: '4 guided processes',
+        icon: `<svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>`,
+        processes: [
+          { name: 'Create Job Requisition',            hint: 'Recruiting > Requisitions > Create',     url: '#' },
+          { name: 'Review Candidate Applications',     hint: 'Pipeline and candidate details',         url: '#' },
+          { name: 'Schedule Interview',                hint: 'Coordinate interviews with team',        url: '#' },
+          { name: 'Extend and Approve Offer',          hint: 'Offer management workflow',              url: '#' },
+        ]
+      },
+    ]
+  },
+  {
+    id: 'talent',
+    name: 'Talent Management',
+    desc: 'Goals, performance, and succession',
+    icon: `<svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>`,
+    subprocesses: [
+      {
+        id: 'emp-talent',
+        name: 'Employee — Goals & Performance',
+        desc: '3 guided processes',
+        icon: `<svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>`,
+        processes: [
+          { name: 'Set Annual Goals',                  hint: 'Me > Career > Goals',                    url: '#' },
+          { name: 'Complete Self Evaluation',          hint: 'Performance review self-assessment',      url: '#' },
+          { name: 'Acknowledge Performance Review',    hint: 'Final step in review cycle',              url: '#' },
+        ]
+      },
+      {
+        id: 'mgr-talent',
+        name: 'Manager — Evaluate & Develop',
+        desc: '3 guided processes',
+        icon: `<svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>`,
+        processes: [
+          { name: 'Submit Performance Rating',         hint: 'Rate direct reports in review cycle',    url: '#' },
+          { name: 'Create Development Plan',           hint: 'Career pathing and skill targets',       url: '#' },
+          { name: 'Nominate for Succession',           hint: 'Talent pool and succession planning',    url: '#' },
+        ]
+      },
+    ]
+  },
+];
+
+// ── STATE ────────────────────────────────────────────────────────────────────
+let selectedModule     = null;
+let selectedSubprocess = null;
+
+// ── RENDER MODULES ───────────────────────────────────────────────────────────
+function renderModules() {
+  const grid = document.getElementById('moduleGrid');
+  grid.innerHTML = modules.map(m => {
+    const total = m.subprocesses.reduce((a, s) => a + s.processes.length, 0);
+    return `
+      <div class="module-card ${selectedModule === m.id ? 'selected' : ''}"
+           onclick="selectModule('${m.id}')">
+        <div class="module-icon">${m.icon}</div>
+        <h3>${m.name}</h3>
+        <p>${m.desc}</p>
+        <div class="module-count">
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+          ${m.subprocesses.length} areas &nbsp;·&nbsp; ${total} processes
+        </div>
+      </div>`;
+  }).join('');
+}
+
+// ── SELECT MODULE ────────────────────────────────────────────────────────────
+function selectModule(id) {
+  selectedModule     = id;
+  selectedSubprocess = null;
+  const mod = modules.find(m => m.id === id);
+
+  // Update breadcrumb
+  updateBreadcrumb([
+    { label: 'All Modules', action: 'goHome()' },
+    { label: mod.name, active: true }
+  ]);
+
+  // Render subprocess panel
+  const panel  = document.getElementById('subprocessPanel');
+  const header = document.getElementById('panelHeader');
+  header.innerHTML = `
+    <div class="panel-icon">${mod.icon}</div>
+    <div class="panel-header-text">
+      <h2>${mod.name}</h2>
+      <p>Select a subprocess area to view its guided processes</p>
+    </div>
+    <button class="close-btn" onclick="goHome()" title="Close">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>`;
+
+  const list = document.getElementById('subprocessList');
+  list.innerHTML = mod.subprocesses.map(s => `
+    <div class="subprocess-card ${selectedSubprocess === s.id ? 'selected' : ''}"
+         onclick="selectSubprocess('${mod.id}', '${s.id}')">
+      <div class="subprocess-bullet">${s.icon}</div>
+      <div>
+        <h4>${s.name}</h4>
+        <span>${s.desc}</span>
+      </div>
+    </div>`).join('');
+
+  panel.classList.add('visible');
+  document.getElementById('processDrawer').classList.remove('visible');
+  renderModules(); // refresh selected state
+
+  // Scroll to panel
+  setTimeout(() => panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 50);
+}
+
+// ── SELECT SUBPROCESS ────────────────────────────────────────────────────────
+function selectSubprocess(modId, subId) {
+  selectedSubprocess = subId;
+  const mod = modules.find(m => m.id === modId);
+  const sub = mod.subprocesses.find(s => s.id === subId);
+
+  updateBreadcrumb([
+    { label: 'All Modules', action: 'goHome()' },
+    { label: mod.name, action: `selectModule('${modId}')` },
+    { label: sub.name, active: true }
+  ]);
+
+  // Refresh subprocess cards
+  document.getElementById('subprocessList').querySelectorAll('.subprocess-card').forEach(el => {
+    el.classList.remove('selected');
+  });
+  event.currentTarget.classList.add('selected');
+
+  // Render process drawer
+  const drawer = document.getElementById('processDrawer');
+  document.getElementById('drawerHeader').innerHTML = `
+    <div class="subprocess-bullet" style="background:rgba(77,166,232,0.15);border-radius:8px;width:32px;height:32px;">${sub.icon.replace('stroke: var(--sky)', 'stroke:#7dc2f4')}</div>
+    <h3>${sub.name}</h3>
+    <span class="sub-label">${sub.processes.length} processes</span>`;
+
+  document.getElementById('processList').innerHTML = sub.processes.map((p, i) => `
+    <a class="process-item" href="${p.url}" target="_blank" rel="noopener">
+      <div class="process-num">${String(i + 1).padStart(2, '0')}</div>
+      <div class="process-text">
+        <strong>${p.name}</strong>
+        <em>${p.hint}</em>
+      </div>
+      <div class="process-link-icon">
+        <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+      </div>
+    </a>`).join('');
+
+  drawer.classList.add('visible');
+  setTimeout(() => drawer.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 50);
+}
+
+// ── GO HOME ──────────────────────────────────────────────────────────────────
+function goHome() {
+  selectedModule     = null;
+  selectedSubprocess = null;
+  document.getElementById('subprocessPanel').classList.remove('visible');
+  document.getElementById('processDrawer').classList.remove('visible');
+  updateBreadcrumb([{ label: 'All Modules', active: true }]);
+  renderModules();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ── BREADCRUMB ───────────────────────────────────────────────────────────────
+function updateBreadcrumb(items) {
+  const bc = document.getElementById('breadcrumb');
+  bc.innerHTML = items.map((item, i) => {
+    const sep = i < items.length - 1
+      ? `<span class="bc-sep">›</span>`
+      : '';
+    if (item.active) {
+      return `<span class="bc-item active">${item.label}</span>${sep}`;
+    }
+    return `<span class="bc-item" onclick="${item.action}">${item.label}</span>${sep}`;
+  }).join('');
+}
+
+// ── INIT ─────────────────────────────────────────────────────────────────────
+renderModules();
+</script>
+</body>
 </html>
